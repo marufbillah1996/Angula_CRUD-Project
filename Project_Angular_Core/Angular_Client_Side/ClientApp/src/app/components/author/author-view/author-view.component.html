@@ -1,0 +1,45 @@
+<mat-card class="mat-elevation-z3">
+    <mat-card-header>
+        
+        <img mat-card-avatar src="../../../../assets/writing-svgrepo-com.svg"/>
+     
+     <mat-card-title>Authors</mat-card-title>
+     <mat-card-subtitle>List of Authors</mat-card-subtitle>
+ </mat-card-header>
+ <mat-card-content>
+    <div class="right">
+        <a mat-mini-fab [routerLink]="['/author-create']">
+            <mat-icon>add</mat-icon>
+        </a>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="authorName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Author Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.authorName}}</mat-cell>
+
+        </ng-container>
+        <ng-container matColumnDef="authorAddress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Author Address</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.authorAddress}}</mat-cell>
+
+        </ng-container>
+      
+        <ng-container matColumnDef="gender">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{getGender(element.gender)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>...</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <a [routerLink]="['/author-edit', element.authorID]"><mat-icon>edit</mat-icon></a>
+                <button [disabled]="!element.canDelete"  mat-icon-button (click)="confirmDelete(element)"><mat-icon>delete</mat-icon></button>
+            </mat-cell>
+
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 40]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+ </mat-card-content>
+</mat-card>

@@ -1,0 +1,82 @@
+<mat-card class="mat-elevation-z3">
+    <mat-card-header>
+  
+      <img mat-card-avatar src="../../../../assets/read-svgrepo-com.svg" />
+  
+      <mat-card-title>Edit Book</mat-card-title>
+      <mat-card-subtitle>Update Book entry</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+  
+      <form [formGroup]="bookForm" class="form-container" (ngSubmit)="save()">
+        <mat-form-field appearance="fill" class="f-w mb-1">
+          <mat-label>Book Name</mat-label>
+          <input matInput formControlName="bookName">
+          <mat-error *ngIf="bookForm.controls['bookName'].hasError('required')">
+            <strong>
+              Customer
+              name
+            </strong> required
+          </mat-error>
+  
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="f-w mb-1">
+            <mat-label>Genre</mat-label>
+            <mat-select formControlName="genreID">
+                <mat-option *ngFor="let op of genres" [value]="op.genreID">{{op.genreName}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="bookForm.controls['genreID'].hasError('required')"><strong>Genre
+                    name</strong> required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="f-w mb-1">
+            <mat-label>Publish Date</mat-label>
+            <input matInput [matDatepicker]="picker"  formControlName="publishDate" />
+            <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="bookForm.controls['publishDate'].hasError('required')"><strong>Publish date</strong>
+                required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="f-w mb-1">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price">
+          <mat-error *ngIf="bookForm.controls['price'].hasError('required')"><strong>Price</strong> required</mat-error>
+  
+        </mat-form-field>
+        
+        <div class="f-w-i mb-1">
+            <img src="{{imgPath}}/Pictures/{{book.picture}}" class="img" *ngIf="book" />
+            <mat-form-field appearance="fill" class="f-w">
+           
+                <mat-label>Picture</mat-label>
+                <button mat-icon-button matPrefix (click)="f_input.click()">
+                  <mat-icon>attach_file</mat-icon>
+                </button>
+                <input type="text" readonly matInput formControlName="picture" />
+                <input
+                  type="file"
+                  multiple
+                  hidden
+                  #f_input
+                  (change)="handleFileInputChange($event)"
+                />
+                <mat-error>this field is required</mat-error>
+            </mat-form-field>
+        </div>
+        
+        <div class="f-w mb-1">
+          <mat-checkbox formControlName="available" class="c-m">Available</mat-checkbox>
+        </div>
+        <div class="f-w mb-1">
+          <button type="submit" mat-raised-button color="primary" [disabled]="bookForm.invalid">Save</button>
+        </div>
+      </form>
+  
+  
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-flat-button [routerLink]="['/books']">Back to list</a>
+    </mat-card-actions>
+  </mat-card>
+  
